@@ -36,7 +36,6 @@ txtEdad.place(x = 160, y = 115)
 list = Listbox(miFrame, width = 50, height = 7)
 list.place(x = 350, y = 35)
 
-
 def Anadir():
     nombre = miNombre.get()
     apellido = miApellido.get()
@@ -49,9 +48,12 @@ def Anadir():
 
 btnAnadir = Button(miFrame, text = "Añadir", command= Anadir).place(x = 100, y = 200)
 
-
 def Borrar():
-    list.delete(list.curselection())
+    respuesta = messagebox.askyesno("Borrar usuario", "¿Estás seguro de quieres eliminar los datos seleccionados?")
+    if respuesta == True:
+        posicion = list.curselection()[0]
+        list.delete(posicion)
+        del listaPersonas[posicion]
 
 btnBorrar = Button(miFrame, text = "Borrar", command= Borrar).place(x = 150, y = 200)
 
@@ -62,11 +64,8 @@ def Modificar():
         a = listaPersonas[posicion]
 
         a.set_nombre(miNombre.get())
-
         a.set_apellido(miApellido.get())
-
         a.set_direccion(miDireccion.get())
-
         a.set_edad(miEdad.get())
 
         list.delete(0, END)
@@ -80,7 +79,6 @@ def Consultar():
 
     txtNombre.delete(0, END)
     txtNombre.insert(0, a.get_nombre())
-
 
     txtApellido.delete(0, END)
     txtApellido.insert(0, a.get_apellido())
@@ -96,4 +94,5 @@ btnConsultar = Button(miFrame, text = "Consultar", command=Consultar).place(x = 
 fichero_binario = open("listaPersonas", "wb")
 pickle.dump(listaPersonas, fichero_binario)
 fichero_binario.close()
+
 raiz.mainloop()
