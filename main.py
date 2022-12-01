@@ -89,10 +89,21 @@ def Consultar():
     txtEdad.delete(0, END)
     txtEdad.insert(0, a.get_edad())
 
-btnConsultar = Button(miFrame, text = "Consultar", command=Consultar).place(x = 270, y = 200)
+btnConsultar = Button(miFrame, text = "Consultar", command= Consultar).place(x = 270, y = 200)
 
-fichero_binario = open("listaPersonas", "wb")
-pickle.dump(listaPersonas, fichero_binario)
-fichero_binario.close()
+def Importar():
+    fichero_binario = open("listaPersonas", "rb")
+    listaPersonas = pickle.load(fichero_binario)
+    list.delete(0, END)
+    list.insert(END, *listaPersonas)
+    fichero_binario.close()
+
+btnImportar = Button(miFrame, text = "Importar", command= Importar).place(x = 430, y = 160)
+def Exportar():
+    fichero_binario = open("listaPersonas", "wb")
+    pickle.dump(listaPersonas, fichero_binario)
+    fichero_binario.close()
+
+btnExportar = Button(miFrame, text = "Exportar", command= Exportar).place(x = 500, y = 160)
 
 raiz.mainloop()
